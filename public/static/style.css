@@ -1,0 +1,24 @@
+* { box-sizing: border-box;}
+
+body {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #111;
+    text-align: center;
+    color: white;
+}
+
+header {
+    padding: 10%;
+}
+
+input {
+    padding: 0.5em;
+    border-radius: 3%;
+    width: 100%;
+}
+
+input:hover {
+    cursor: pointer;
+}
