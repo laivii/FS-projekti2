@@ -1,5 +1,20 @@
 * { box-sizing: border-box;}
 
+@font-face {
+    font-family: "Bangers";
+    src: url("Bangers-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Komika";
+    src: url("komika.hand.ttf");
+}
+
+h1, h2, h3, h4 {
+    font-family:"Bangers";
+    color: #E5DC33;
+}
+
 body {
     width: 60%;
     margin-left: auto;
@@ -7,10 +22,16 @@ body {
     background-color: #111;
     text-align: center;
     color: white;
+    font-family: "Komika";
+}
+
+.container-fluid {
+    margin-top: 3%;
+    margin-bottom: 3%;
 }
 
 header {
-    padding: 10%;
+    padding: 3%;
 }
 
 input {
@@ -21,4 +42,40 @@ input {
 
 input:hover {
     cursor: pointer;
+}
+
+.card {
+    margin: 2%;
+}
+
+.card-body {
+    color: #111;
+    text-align: left;
+    background-color: #47718F;
+}
+
+.card-header {
+    text-align: left;
+    vertical-align: middle;
+    background-color: #184059;
+    color: #FFF;
+}
+
+.card-footer {
+    text-align: right;
+    font-size: 12px;
+    background-color: #47718F;
+}
+
+.delete {
+    float: right;
+}
+
+.commentator {
+    float: left;
+}
+
+.btn-secondary {
+    background-color: #E5DC33;
+    color:#111;
 }

@@ -43,20 +43,29 @@ app.get( '/', function ( req, res ) {
 
 //Kaikkien dokumenttien hakeminen
 app.get( '/api/getall', async ( req, res ) => {
-    Message.find({}).then( messages => {
-        console.log( messages );
-    }).catch( error => {
+    try {
+        var messages = await Message.find({});
+        var cards = makeCards( messages );
+        res.send( cards );
+    } catch ( error ) {
         console.log( error );
-    });
+        res.status( 500 ).send( "Internal server error" );
+    }
 });
 
-//Tietyn dokumentin haku ID:n perusteella
+//Tietyn dokumentin haku käyttäjänimen perusteella
+app.get( '/api/:username', async ( req, res ) => {
+    var username = req.params.username;
+    const message = await Message.find({ username });
+    console.log( message );
+});
+
+/*//Tietyn dokumentin haku ID:n perusteella
 app.get( '/api/:id', async ( req, res ) => {
     var id = new ObjectId( req.params.id );
     const message = await Message.findById( id );
     console.log( message );
-
-});
+});*/
 
 //Uuden dokumentin lisääminen
 app.post( '/api/add', async ( req, res ) => {
@@ -77,7 +86,7 @@ app.post( '/api/add', async ( req, res ) => {
     });
 
     res.set("location", "/");
-    res.status(301).send();
+    res.status( 301 ).send();
     return;
 });
 
@@ -106,11 +115,48 @@ app.delete( '/api/delete/:id', async ( req, res ) => {
         }).catch( error => {
             console.log( error );
         });
+
+    res.status( 200 ).send();
+    return;
 });
 
 app.get( '*', function ( req, res ) {
     res.send( "Can\'t find requested page" );
 });
+
+//Funktio
+function makeCards( data ) {
+    var messages = data;
+    var cards = "<div class='row'>";
+
+    for(let i = 0; i < messages.length; i++){  
+        var info = messages[i];
+        var date = JSON.stringify(info["date"]);
+        var pvm = date.substring(1, 10);
+        var time = date.substring(12, 20);
+
+        cards += `
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <p class="commentator">${info["username"]}, ${info["country"]}</p>
+                    <!--<button type="button" class="update" id="update${i}" aria-label="Update"></button>-->
+                    <button type="button" class="btn-close delete" id="${info["_id"]}" aria-label="Close"></button>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">${info["message"]}</p>
+                </div>
+                <div class="card-footer">
+                    <p class="mb-2">${pvm} ${time}</p>
+                </div>
+            </div>
+        </div>`
+    }
+
+    cards += '</div>';
+
+    return cards;
+}
 
 app.listen(8080);
 
