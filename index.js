@@ -94,14 +94,18 @@ app.post( '/api/add', async ( req, res ) => {
 app.put( '/api/update/:id', async ( req, res ) => {
     var id = new ObjectId( req.params.id );
     const filter = { _id : id };
-    const update = { message : "moromoro!"}
-
+    const update = req.body;
+    
     Message.updateOne( filter, update )
         .then(result => {
-            console.log( `${result.nModified} document updated.` );
+            console.log( `Document updated.` );
         }).catch( error => {
             console.log( error );
         });
+    
+    res.set("location", "/");
+    res.status( 200 ).send();
+    return;
 });
 
 //Tietyn dokumentin poistaminen ID:n perusteella
@@ -138,16 +142,16 @@ function makeCards( data ) {
         cards += `
         <div class="col-sm-6">
             <div class="card">
-                <div class="card-header">
-                    <p class="commentator">${info["username"]}, ${info["country"]}</p>
-                    <!--<button type="button" class="update" id="update${i}" aria-label="Update"></button>-->
-                    <button type="button" class="btn-close delete" id="${info["_id"]}" aria-label="Close"></button>
+                <div class="card-header" id="${info["_id"]}">
+                    <p class="commentator text-muted">${info["username"]}, ${info["country"]}</p>
+                    <button type="button" class="btn delete text-muted" aria-label="Close"><i class="bi-trash"></i></button>
+                    <button type="button" class="btn update text-muted" aria-label="Update"><i class="bi-pencil-square"></i></button>
                 </div>
                 <div class="card-body">
                     <p class="card-text">${info["message"]}</p>
                 </div>
                 <div class="card-footer">
-                    <p class="mb-2">${pvm} ${time}</p>
+                    <p class="mb-2 text-muted"> <span id="updated" class="hidden">updated</span> ${pvm} ${time}</p>
                 </div>
             </div>
         </div>`

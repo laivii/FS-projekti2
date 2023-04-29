@@ -51,20 +51,18 @@ input:hover {
 .card-body {
     color: #111;
     text-align: left;
-    background-color: #47718F;
 }
 
 .card-header {
     text-align: left;
     vertical-align: middle;
-    background-color: #184059;
-    color: #FFF;
+    color: #555;
 }
 
 .card-footer {
     text-align: right;
     font-size: 12px;
-    background-color: #47718F;
+    color: #555;
 }
 
 .delete {
@@ -78,4 +76,14 @@ input:hover {
 .btn-secondary {
     background-color: #E5DC33;
     color:#111;
+}
+
+.hidden {
+    display: none;
+}
+
+.update {
+    border: none;
+    float: right;
+    cursor: pointer;
 }

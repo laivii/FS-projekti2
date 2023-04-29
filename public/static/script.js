@@ -21,11 +21,16 @@ for (let i = 0; i < closeButtons.length; i++) {
     closeButtons[i].addEventListener("click", deleteDocument);
 }
 
+//Luodaan Event Listernerit kaikille "päivitys" napeille
+var updateButtons = document.getElementsByClassName( "update" );
+
+for (let i = 0; i < updateButtons.length; i++) {
+    updateButtons[i].addEventListener("click", updateDocument);
+}
+
 //Funktio komentin/dokumentin poistamiseen
 function deleteDocument() {
-    var id = this.id;
-
-    console.log( id );
+    var id = this.parentElement.id;
 
     var uri = "/api/delete/" + id;
 
@@ -37,6 +42,31 @@ function deleteDocument() {
     }
 
     xhttp.send();
+}
+
+function updateDocument() {
+    var date =new Date;
+    var id = this.parentElement.id;
+
+    var uri = "/api/update/" + id;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", uri, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.onreadystatechange = function() {
+        window.location.href = '/';
+        document.getElementById( "updated" ).classList.remove( "hidden" )
+    }
+
+    const updates = JSON.stringify({
+        "username":"Viivi",
+        "country":"Finland",
+        "message":"Moromoro!",
+        "time":date
+    });
+
+    xhttp.send( updates );
 }
 
 function search() {
