@@ -146,9 +146,10 @@ function makeCards( data ) {
                     <p class="commentator text-muted">${info["username"]}, ${info["country"]}</p>
                     <button type="button" class="btn delete text-muted" aria-label="Close"><i class="bi-trash"></i></button>
                     <button type="button" class="btn update text-muted" aria-label="Update"><i class="bi-pencil-square"></i></button>
+                    <button type="button" id="save" class="btn save hidden text-muted" aria-label="Save"><i class="bi-save"></i></button>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">${info["message"]}</p>
+                    <textarea id="message" class="card-text" disabled>${info["message"]}</textarea>
                 </div>
                 <div class="card-footer">
                     <p class="mb-2 text-muted"> <span id="updated" class="hidden">updated</span> ${pvm} ${time}</p>

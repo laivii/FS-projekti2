@@ -87,3 +87,18 @@ input:hover {
     float: right;
     cursor: pointer;
 }
+
+.save {
+    float: right;
+    cursor: pointer;
+}
+
+textarea:disabled {
+    border: none;
+    background: none;
+    resize: none;
+}
+
+textarea {
+    resize: none;
+}

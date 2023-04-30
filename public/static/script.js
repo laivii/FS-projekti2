@@ -21,14 +21,21 @@ for (let i = 0; i < closeButtons.length; i++) {
     closeButtons[i].addEventListener("click", deleteDocument);
 }
 
-//Luodaan Event Listernerit kaikille "päivitys" napeille
+//Luodaan Event Listenerit kaikille "päivitys" napeille
 var updateButtons = document.getElementsByClassName( "update" );
 
 for (let i = 0; i < updateButtons.length; i++) {
     updateButtons[i].addEventListener("click", updateDocument);
 }
 
-//Funktio komentin/dokumentin poistamiseen
+//Luodaan Event Listenerit kaikille "tallennus" napeille
+var saveButtons = document.getElementsByClassName( "save" );
+
+for (let i = 0; i < saveButtons.length; i++) {
+    saveButtons[i].addEventListener("click", saveDocument);
+}
+
+//Funktio kommentin/dokumentin poistamiseen
 function deleteDocument() {
     var id = this.parentElement.id;
 
@@ -44,9 +51,28 @@ function deleteDocument() {
     xhttp.send();
 }
 
+//Funktio kommentin/dokumentin viestin päivittämiseen
 function updateDocument() {
-    var date =new Date;
+    let card_header = this.parentElement;
+    let this_card = card_header.parentElement;
+    var element = this_card.querySelector( "#message" );
+
+    card_header.querySelector( "#save" ).classList.remove( "hidden" );
+
+    if( element.disabled == true){
+        element.disabled = false;
+    }
+}
+
+//Funktio kommentin tallentamiseen
+function saveDocument() {
     var id = this.parentElement.id;
+    let card_header = this.parentElement;
+    let this_card = card_header.parentElement;
+
+    var element = this_card.querySelector( "#message" );
+
+    var message = element.value;
 
     var uri = "/api/update/" + id;
 
@@ -55,20 +81,20 @@ function updateDocument() {
     xhttp.setRequestHeader("Content-Type", "application/json");
 
     xhttp.onreadystatechange = function() {
-        window.location.href = '/';
-        document.getElementById( "updated" ).classList.remove( "hidden" )
+        this_card.querySelector("#updated").classList.remove("hidden")
+        element.disabled = true;
+        //window.location.href = '/';
     }
 
     const updates = JSON.stringify({
-        "username":"Viivi",
-        "country":"Finland",
-        "message":"Moromoro!",
-        "time":date
+        "message": message,
+        "time" : new Date()
     });
 
-    xhttp.send( updates );
+    xhttp.send( updates );    
 }
 
+//Funktio kommentin hakemiseen
 function search() {
     var haku = document.getElementById( "hakuehto" );
     var hakuehto = haku.value;
